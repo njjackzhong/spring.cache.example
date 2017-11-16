@@ -26,6 +26,7 @@ public class UserResource {
 
     @GetMapping(value = "/{name}")
     public Users getUser(@PathVariable final String name) {
+
         return usersCache.getUser(name);
     }
 
