@@ -3,17 +3,13 @@ package com.efo.s.spring.cache.example.resource;
 import com.efo.s.spring.cache.example.cache.UsersCache;
 import com.efo.s.spring.cache.example.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ${VERSION}
  * Created by jack on 2017/11/16
  */
 @RestController
-@RequestMapping(value = "/rest/search")
 public class UserResource {
 
 
@@ -24,10 +20,13 @@ public class UserResource {
         this.usersCache = usersCache;
     }
 
-    @GetMapping(value = "/{name}")
+    @GetMapping(value = "/rest/search/{name}")
     public Users getUser(@PathVariable final String name) {
-
-        return usersCache.getUser(name);
+        return usersCache.getUserByName(name);
     }
 
+    @PostMapping(value = "/rest/save/")
+    public void saveUser(@RequestBody Users  users){
+        usersCache.saveUser(users);
+    }
 }

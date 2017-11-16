@@ -8,6 +8,9 @@ import java.io.Serializable;
 /**
  * ${VERSION}
  * Created by jack on 2017/11/16
+ *
+ * 角色: 缓存对象
+ *
  */
 @Entity
 public class Users implements Serializable{
