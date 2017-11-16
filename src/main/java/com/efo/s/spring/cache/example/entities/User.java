@@ -1,8 +1,6 @@
-package com.efo.s.spring.cache.example.model;
+package com.efo.s.spring.cache.example.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,20 +11,22 @@ import java.io.Serializable;
  *
  */
 @Entity
-public class Users implements Serializable{
+@Table(name = "CMS_USERS")
+public class User implements Serializable{
 
     @Id
     @GeneratedValue
     private Long id;
     private String name;
+    @Column(name = "TEAMNAME")
     private String teamName;
     private Long salary;
 
-    public Users(){
+    public User(){
 
     }
 
-    public Users(String name, String teamName, Long salary) {
+    public User(String name, String teamName, Long salary) {
         this.name = name;
         this.teamName = teamName;
         this.salary = salary;
@@ -66,7 +66,7 @@ public class Users implements Serializable{
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", teamName='" + teamName + '\'' +

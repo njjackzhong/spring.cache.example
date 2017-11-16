@@ -1,6 +1,6 @@
 package com.efo.s.spring.cache.example.cache;
 
-import com.efo.s.spring.cache.example.model.Users;
+import com.efo.s.spring.cache.example.entities.User;
 import com.efo.s.spring.cache.example.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * ${VERSION}
@@ -28,7 +29,7 @@ public class UsersCache {
 
 
     @Cacheable(value = "usersCache", key = "#name")
-    public Users getUserByName(String name) {
+    public User getUserByName(String name) {
 
         System.out.println(String.format("[%s] Retrieving from database for name:%s",sdf.format(new Date()), name));
         return usersRepository.findByName(name);
@@ -36,7 +37,7 @@ public class UsersCache {
 
     @CachePut(value = "usersCache",key = "#users.name")
     //清空特定缓存
-    public void saveUser(Users users){
+    public void saveUser( User users){
         usersRepository.save(users);
     }
 
@@ -44,6 +45,11 @@ public class UsersCache {
     //清空缓存
     public void reload(){
 
+    }
+
+    public List<User> findAll()
+    {
+        return usersRepository.findAll();
     }
 
 
