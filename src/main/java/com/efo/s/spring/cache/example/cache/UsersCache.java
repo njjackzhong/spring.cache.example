@@ -2,6 +2,8 @@ package com.efo.s.spring.cache.example.cache;
 
 import com.efo.s.spring.cache.example.entities.User;
 import com.efo.s.spring.cache.example.repository.UsersRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -21,8 +23,8 @@ import java.util.List;
 @CacheConfig(cacheNames = "recordsCache")
 public class UsersCache {
 
+    private Log log = LogFactory.getLog(UsersCache.class);
     private final UsersRepository usersRepository;
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     @Autowired
     public UsersCache(UsersRepository usersRepository) {
@@ -32,8 +34,7 @@ public class UsersCache {
 
     @Cacheable( key = "#name")
     public User getUserByName(String name) {
-
-        System.out.println(String.format("[%s] Retrieving from database for name:%s",sdf.format(new Date()), name));
+        log.info(String.format(" Retrieving from database for name:%s", name));
         return usersRepository.findByName(name);
     }
 
@@ -49,6 +50,7 @@ public class UsersCache {
 
     }
 
+    @Cacheable(key = "#root.methodName")
     public List<User> findAll()
     {
         return usersRepository.findAll();
