@@ -60,8 +60,7 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
 -->
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="ehcache.xsd"
-         updateCheck="true" monitoring="autodetect"
-         dynamicConfig="true">
+>
 
     <!--
     DiskStore configuration
@@ -718,12 +717,22 @@ Here is an example of CacheManager level resource tuning, which will use up to 4
     <cache name="usersCache"
            maxEntriesLocalHeap="10000"
            maxEntriesLocalDisk="100000"
-           eternal="false"
            diskSpoolBufferSizeMB="20"
-           timeToIdleSeconds="5"
-           timeToLiveSeconds="10"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
            memoryStoreEvictionPolicy="LFU"
-           transactionalMode="off">
+    >
+        <persistence strategy="localTempSwap"/>
+    </cache>
+
+    <cache name="recordsCache"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="100000"
+           diskSpoolBufferSizeMB="20"
+           timeToIdleSeconds="300"
+           timeToLiveSeconds="600"
+           memoryStoreEvictionPolicy="LFU"
+    >
         <persistence strategy="localTempSwap"/>
     </cache>
 
